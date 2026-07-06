@@ -32,7 +32,11 @@ app.get('/', (req, res) => {
   res.send('Helix Pay API Server is running.');
 });
 
-// Start Server
-app.listen(PORT, () => {
-  console.log(`🚀 Helix Pay Express Server running on http://localhost:${PORT}`);
-});
+// Start Server (UNCOMMENT THIS BLOCK FOR LOCAL RUNNING)
+// app.listen(PORT, () => {
+//   console.log(`🚀 Helix Pay Express Server running on http://localhost:${PORT}`);
+// });
+
+// Export for Vercel deployment
+export default app;
+
