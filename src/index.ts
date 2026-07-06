@@ -27,11 +27,6 @@ app.use(express.urlencoded({ extended: true }));
 // Mounting routes
 app.use('/api/applications', applicationRouter);
 
-// Health check endpoint
-app.get('/health', (req, res) => {
-  res.status(200).json({ status: 'ok', timestamp: new Date() });
-});
-
 // Root endpoint
 app.get('/', (req, res) => {
   res.send('Helix Pay API Server is running.');
