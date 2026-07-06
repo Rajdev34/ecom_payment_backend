@@ -80,14 +80,13 @@ router.post('/', async (req, res) => {
       html: generateApplicationEmailHtml(applicationData, downloadUrl),
     };
 
-    // 4. Send email asynchronously (don't block the API response)
-    transporter.sendMail(mailOptions)
-      .then((info) => {
-        console.log('✉️ Application notification email sent:', info.messageId);
-      })
-      .catch((mailErr) => {
-        console.error('❌ Failed to send application email notification:', mailErr);
-      });
+    // 4. Send email and await it (so serverless platforms like Vercel don't terminate execution prematurely)
+    try {
+      const info = await transporter.sendMail(mailOptions);
+      console.log('✉️ Application notification email sent:', info.messageId);
+    } catch (mailErr) {
+      console.error('❌ Failed to send application email notification:', mailErr);
+    }
 
     // 5. Respond success immediately to the client
     return res.status(201).json({ success: true });
