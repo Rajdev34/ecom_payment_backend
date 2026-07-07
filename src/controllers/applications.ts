@@ -2,7 +2,6 @@ import { Request, Response } from 'express';
 import nodemailer from 'nodemailer';
 import { supabase, supabaseAdmin } from '../config/supabase.js';
 import { generateApplicationEmailHtml } from '../templates/applicationEmail.js';
-import { uploadMerchantDocument } from '../utils/fileUpload.js';
 import { applicationSchema } from '../schemas/application.js';
 
 function parseApplicationPayload(body: any, documentUrl: string | null) {
@@ -68,21 +67,20 @@ export async function submitApplication(req: Request, res: Response) {
       ? supabaseAdmin 
       : supabase;
 
-    if (!req.file) {
+    const documentUrl = req.body.document_url;
+
+    if (!documentUrl || typeof documentUrl !== 'string') {
       return res.status(400).json({ error: 'A ZIP file containing all required documents is required.' });
     }
 
-    let documentUrl: string;
-    try {
-      documentUrl = await uploadMerchantDocument(
-        req.file.buffer,
-        req.file.originalname,
-        req.file.mimetype,
-        client
-      );
-    } catch (uploadError: any) {
-      console.error('File upload error in application submission route:', uploadError);
-      return res.status(400).json({ error: uploadError.message });
+    if (supabaseAdmin) {
+      const { data: signedData, error: signError } = await supabaseAdmin.storage
+        .from('merchant-documents')
+        .createSignedUrl(documentUrl, 60);
+      if (signError || !signedData) {
+        console.error('Uploaded document verification failed:', signError);
+        return res.status(400).json({ error: 'Uploaded document verification failed or does not exist.' });
+      }
     }
 
     const applicationData = parseApplicationPayload(req.body, documentUrl);
@@ -156,6 +154,49 @@ export async function submitApplication(req: Request, res: Response) {
     return res.status(201).json({ success: true });
   } catch (error: any) {
     console.error('Server error during application submission:', error);
+    return res.status(500).json({ error: 'Internal Server Error' });
+  }
+}
+
+export async function getPresignedUrl(req: Request, res: Response) {
+  try {
+    const { fileName, fileType } = req.body;
+    if (!fileName || !fileType) {
+      return res.status(400).json({ error: 'fileName and fileType are required.' });
+    }
+
+    const allowedMimeTypes = [
+      'application/zip',
+      'application/x-zip-compressed',
+      'application/x-zip',
+      'application/octet-stream',
+      'multipart/x-zip'
+    ];
+
+    if (!allowedMimeTypes.includes(fileType) && !fileName.toLowerCase().endsWith('.zip')) {
+      return res.status(400).json({ error: 'Only ZIP files are allowed.' });
+    }
+
+    if (!supabaseAdmin) {
+      return res.status(500).json({ error: 'Supabase admin client not initialized.' });
+    }
+
+    const { data, error } = await supabaseAdmin.storage
+      .from('merchant-documents')
+      .createSignedUploadUrl(fileName);
+
+    if (error) {
+      console.error('Error generating presigned upload URL:', error);
+      return res.status(500).json({ error: error.message });
+    }
+
+    return res.status(200).json({
+      signedUrl: data.signedUrl,
+      path: fileName,
+      token: data.token
+    });
+  } catch (error: any) {
+    console.error('Server error during presigned URL generation:', error);
     return res.status(500).json({ error: 'Internal Server Error' });
   }
 }

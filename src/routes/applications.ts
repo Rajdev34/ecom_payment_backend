@@ -1,16 +1,9 @@
 import { Router } from 'express';
-import multer from 'multer';
-import { submitApplication } from '../controllers/applications.js';
+import { submitApplication, getPresignedUrl } from '../controllers/applications.js';
 
 const router = Router();
 
-const upload = multer({
-  storage: multer.memoryStorage(),
-  limits: {
-    fileSize: 50 * 1024 * 1024
-  }
-});
-
-router.post('/submit', upload.single('document'), submitApplication);
+router.post('/submit', submitApplication);
+router.post('/presign', getPresignedUrl);
 
 export default router;
