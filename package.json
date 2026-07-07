@@ -1,14 +1,15 @@
 {
-  "name": "helixpay-backend",
+  "name": "ecom-payments-backend",
   "version": "1.0.0",
-  "description": "Backend API server for Helix Pay merchant applications",
+  "description": "Backend API server for Ecom payments merchant applications",
   "main": "dist/index.js",
   "type": "module",
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "build": "rimraf dist && tsc",
     "start": "node dist/index.js",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.45.4",
@@ -16,7 +17,8 @@
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "multer": "^1.4.5-lts.1",
-    "nodemailer": "^9.0.3"
+    "nodemailer": "^9.0.3",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
@@ -24,8 +26,11 @@
     "@types/multer": "^1.4.11",
     "@types/node": "^20.14.9",
     "@types/nodemailer": "^8.0.1",
+    "@types/supertest": "^7.2.0",
     "rimraf": "^5.0.7",
+    "supertest": "^7.2.2",
     "tsx": "^4.19.1",
-    "typescript": "^5.5.3"
+    "typescript": "^5.5.3",
+    "vitest": "^4.1.10"
   }
 }

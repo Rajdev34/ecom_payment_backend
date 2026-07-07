@@ -17,7 +17,7 @@ export function generateApplicationEmailHtml(data: any, downloadUrl: string): st
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>New Merchant Application: ${data.business_name || 'Helix Pay'}</title>
+  <title>New Merchant Application: ${data.business_name || 'Ecom Payments'}</title>
   <style type="text/css">
     /* Reset styles to ensure email client consistency */
     body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
@@ -45,7 +45,7 @@ export function generateApplicationEmailHtml(data: any, downloadUrl: string): st
                   </td>
                   <td style="padding-left: 12px; vertical-align: middle; text-align: left; line-height: 1;">
                     <span style="color: #090d16; font-size: 26px; font-weight: 800; letter-spacing: -0.03em; font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; display: inline-block;">
-                      Helix<span style="color: #60a5fa;">Pay</span>
+                      Ecom<span style="color: #60a5fa;">Payments</span>
                     </span>
                   </td>
                 </tr>
@@ -263,8 +263,8 @@ export function generateApplicationEmailHtml(data: any, downloadUrl: string): st
           <!-- Elegant Footer -->
           <tr>
             <td style="padding: 24px 40px; background-color: #f9fafb; border-top: 1px solid #f3f4f6; text-align: center; font-size: 12px; color: #6b7280; line-height: 1.5;">
-              This is an automated notification from the Helix Pay administrative portal.<br/>
-              Helix Pay © 2026. All rights reserved.
+              This is an automated notification from the Ecom Payments administrative portal.<br/>
+              Ecom Payments © 2026. All rights reserved.
             </td>
           </tr>
           

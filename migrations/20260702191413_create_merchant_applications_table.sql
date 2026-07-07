@@ -2,9 +2,9 @@
 # Create merchant_applications table (single-tenant, no auth)
 
 ## Purpose
-Stores merchant applications submitted from the Helix Pay marketing site's
+Stores merchant applications submitted from the Ecom payments marketing site's
 "Get Started" form. This is a no-auth public site — visitors fill out an
-application form and the submission is stored for review by the Helix Pay team.
+application form and the submission is stored for review by the Ecom payments team.
 
 ## New Tables
 - `merchant_applications`
