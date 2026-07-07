@@ -117,7 +117,7 @@ export async function submitApplication(req: Request, res: Response) {
       }
     }
 
-    console.log('📧 Setting up SMTP transporter with config:', {
+    console.log('Setting up SMTP transporter with config:', {
       host: process.env.SMTP_HOST,
       port: process.env.SMTP_PORT,
       user: process.env.SMTP_USER,
@@ -126,7 +126,7 @@ export async function submitApplication(req: Request, res: Response) {
     });
 
     if (!process.env.SMTP_HOST) {
-      console.warn('⚠️ Warning: SMTP_HOST is not defined in process.env. Defaulting to localhost.');
+      console.warn('Warning: SMTP_HOST is not defined in process.env. Defaulting to localhost.');
     }
 
     const transporter = nodemailer.createTransport({
@@ -148,9 +148,9 @@ export async function submitApplication(req: Request, res: Response) {
 
     try {
       const info = await transporter.sendMail(mailOptions);
-      console.log('✉️ Application notification email sent:', info.messageId);
+      console.log('Application notification email sent:', info.messageId);
     } catch (mailErr) {
-      console.error('❌ Failed to send application email notification:', mailErr);
+      console.error('Failed to send application email notification:', mailErr);
     }
 
     return res.status(201).json({ success: true });

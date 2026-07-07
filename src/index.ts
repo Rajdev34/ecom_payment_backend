@@ -29,7 +29,7 @@ app.get('/', (req, res) => {
 });
 
 // app.listen(PORT, () => {
-//   console.log(`🚀 Ecom payments Express Server running on http://localhost:${PORT}`);
+//   console.log(`Ecom payments Express Server running on http://localhost:${PORT}`);
 // });
 
 export default app;

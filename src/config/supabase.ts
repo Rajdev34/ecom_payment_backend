@@ -22,7 +22,7 @@ if (!supabaseAnonKey) {
 }
 
 if (!supabaseServiceKey) {
-  console.warn('⚠️ Warning: SUPABASE_SERVICE_ROLE_KEY is missing. supabaseAdmin will not be available.');
+  console.warn('Warning: SUPABASE_SERVICE_ROLE_KEY is missing. supabaseAdmin will not be available.');
 }
 
 // 1. Client that ENFORCES Row-Level Security (RLS)
