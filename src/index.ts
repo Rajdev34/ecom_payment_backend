@@ -28,9 +28,9 @@ app.get('/', (req, res) => {
   res.send('Ecom payments API Server is running.');
 });
 
-app.listen(PORT, () => {
-  console.log(`🚀 Ecom payments Express Server running on http://localhost:${PORT}`);
-});
+// app.listen(PORT, () => {
+//   console.log(`🚀 Ecom payments Express Server running on http://localhost:${PORT}`);
+// });
 
-// export default app;
+export default app;
 
